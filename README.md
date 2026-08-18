@@ -11,6 +11,9 @@ src/
 ├── services/
 ├── config/
 ├── dtos/
+├── interfaces/
+├── repositories/
+├── utils/
 └── app.ts
 ```
 
@@ -22,13 +25,20 @@ src/
 - Environment variables management
   - Using Zod for validation
   - Typesafe environment variables
-- Controllers, services, routes, middleware, models, dtos, and config
+- Controllers, services, routes, middleware, models, dtos, repositories and config
   - Well-structured codebase
+  - graceful shutdown
+
+
 
 
 ## How to run
 
 ```bash
+# Create a .env file from .env.example
+# Fill the .env file with your environment variables
+cp .env.example .env
+
 # Install dependencies
 npm install
 
