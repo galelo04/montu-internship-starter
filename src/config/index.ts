@@ -7,6 +7,8 @@ const envSchema = z.object({
     NODE_ENV: z.enum(['development', 'production', 'test']).default('development'),
     PORT: z.coerce.number().optional().default(3000),
     MONGODB_URI: z.url(),
+    JWT_SECRET: z.string(),
+    JWT_EXPIRES_IN: z.string().default("24h"),
 });
 
 const parsedEnv = envSchema.safeParse(process.env);
@@ -19,5 +21,11 @@ if (!parsedEnv.success) {
 export const config = {
     env: parsedEnv.data.NODE_ENV,
     port: parsedEnv.data.PORT,
-    MONGODB_URI: parsedEnv.data.MONGODB_URI,
+    db: {
+        url: parsedEnv.data.MONGODB_URI,
+    },
+    jwt: {
+        secret: parsedEnv.data.JWT_SECRET,
+        expiresIn: parsedEnv.data.JWT_EXPIRES_IN,
+    }
 } as const;

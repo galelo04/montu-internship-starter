@@ -3,7 +3,7 @@ import { config } from './index';
 
 export async function connectDB(): Promise<void> {
     try {
-        if (config.MONGODB_URI === '') {
+        if (config.db.url === '') {
             throw new Error('MongoDB URI is not defined');
         }
 
@@ -19,7 +19,7 @@ export async function connectDB(): Promise<void> {
             console.warn('MongoDB connection lost. Attempting reconnection...');
         });
 
-        await mongoose.connect(config.MONGODB_URI);
+        await mongoose.connect(config.db.url);
 
         console.log('Connected to MongoDB successfully');
     } catch (error) {

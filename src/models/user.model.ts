@@ -1,5 +1,11 @@
-import { model, Schema } from "mongoose";
-import { IUser } from "../interfaces/user.interface";
+import { HydratedDocument, InferSchemaType, model, Schema } from "mongoose";
+
+export interface IUser {
+    name: string;
+    email: string;
+    passwordHash: string;
+    role: string;
+}
 
 const userSchema = new Schema<IUser>(
     {
@@ -19,8 +25,11 @@ const userSchema = new Schema<IUser>(
         role: {
             type: String,
             required: true
-        }
-    }
+        },
+    },
+    { timestamps: true }
 )
+
+export type UserDocument = HydratedDocument<IUser>;
 
 export const UserModel = model<IUser>('User', userSchema);
