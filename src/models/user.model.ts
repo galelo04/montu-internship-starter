@@ -1,22 +1,35 @@
-import { HydratedDocument, InferSchemaType, model, Schema } from "mongoose";
+import { HydratedDocument, model, Schema } from "mongoose";
+import { z } from "zod";
+
+
+const USER_ROLE_SCHEMA = z.enum(['user', 'admin']);
+
+const userRoles = USER_ROLE_SCHEMA.options;
+
+export type USER_ROLE = z.infer<typeof USER_ROLE_SCHEMA>;
 
 export interface IUser {
     name: string;
     email: string;
     passwordHash: string;
-    role: string;
+    role: USER_ROLE;
 }
 
 const userSchema = new Schema<IUser>(
     {
         name: {
             type: String,
-            required: true
+            required: true,
+            trim: true,
+            minlength: 3,
+            maxlength: 50,
         },
         email: {
             type: String,
             required: true,
-            unique: true
+            unique: true,
+            trim: true,
+            lowercase: true,
         },
         passwordHash: {
             type: String,
@@ -24,7 +37,8 @@ const userSchema = new Schema<IUser>(
         },
         role: {
             type: String,
-            required: true
+            enum: userRoles,
+            default: 'user',
         },
     },
     { timestamps: true }

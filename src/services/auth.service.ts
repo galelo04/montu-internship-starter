@@ -15,7 +15,8 @@ export class AuthService {
         if (user) {
             throw new DuplicateError("User already exists");
         }
-        const hashedPassword = await bcrypt.hash(dto.password, 10);
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(dto.password, salt);
         return await this.userRepo.createUser({
             ...dto,
             passwordHash: hashedPassword,
