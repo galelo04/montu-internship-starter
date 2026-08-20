@@ -1,0 +1,289 @@
+{
+  "info": {
+    "_postman_id": "6b361440-9a95-4054-995b-40e8e992806a",
+    "name": "notes-system",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "56308736",
+    "_collection_link": "https://go.postman.co/collection/56308736-6b361440-9a95-4054-995b-40e8e992806a?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "Note",
+      "item": [
+        {
+          "name": "create note",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\":\"Test311\",\r\n    \"description\":\"test description\",\r\n    \"dailyRentalRate\":9.0,\r\n    \"statusId\":1,\r\n    \"categoryId\":1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/equipments",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "equipments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get note",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/notes/:id",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "notes",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all notes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/notes?status=pending&search=te",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "notes"
+              ],
+              "query": [
+                {
+                  "key": "status",
+                  "value": "pending"
+                },
+                {
+                  "key": "search",
+                  "value": "te"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update note",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"title\":\"Note1\",\r\n    \"conent\":\"Note1 content\",\r\n    \"priority\":\"medium\",\r\n    \"dueDate\":\"2026-08-31\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/notes/:noteId",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "notes",
+                ":noteId"
+              ],
+              "variable": [
+                {
+                  "key": "noteId",
+                  "value": "6a86fe93e20dd0ce065dfe63"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete note",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{url}}/notes/:noteId",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "notes",
+                ":noteId"
+              ],
+              "variable": [
+                {
+                  "key": "noteId",
+                  "value": "6a86fe93e20dd0ce065dfe63"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const responseBody = pm.response.json();\r",
+                  "const access = responseBody.accessToken;\r",
+                  "const refresh = responseBody.refreshToken;\r",
+                  "\r",
+                  "\r",
+                  "pm.environment.set(\"accessToken\", access);\r",
+                  "pm.environment.set(\"refreshToken\", refresh);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\":\"mostafa@mostafa.com\",\r\n    \"password\": \"12345678\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/auth/login",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\":\"Mostafa\",\r\n    \"email\": \"mostafa1@mostafa.com\",\r\n    \"password\": \"12345678\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{url}}/auth/register",
+              "host": [
+                "{{url}}"
+              ],
+              "path": [
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        }
+      ],
+      "auth": {
+        "type": "noauth"
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        },
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {},
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
